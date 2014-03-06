@@ -14,11 +14,17 @@ def install_mysql():
 	with cd(conf.BASE_DIR + '/src/' + conf.MYSQL):
 		run('''
 			cmake . -DCMAKE_INSTALL_PREFIX=''' + conf.INSTALL_DIR + '''/opt/mysql \
+			-DSYSCONFDIR=''' + conf.INSTALL_DIR + '''/srv/mysql/3306 \
+			-DMYSQL_DATADIR=''' + conf.INSTALL_DIR + '''/srv/mysql/3306/data \
 			-DMYSQL_UNIX_ADDR=''' + conf.INSTALL_DIR + '''/srv/mysql/3306/mysql.sock \ 
 			-DWITH_INNOBASE_STORAGE_ENGINE=1 \
-			-DMYSQL_TCP_PORT=3306 -DEXTRA_CHARSETS=all \
+			-DMYSQL_TCP_PORT=3306 \
 			-DDEFAULT_CHARSET=utf8 \
 			-DDEFAULT_COLLATION=utf8_general_ci \
+			-DWITH_EXTRA_CHARSETS=complex \
+			-DWITH_ARCHIVE_STORAGE_ENGINE=ON \
+			-DWITH_EMBEDDED_SERVER=ON \
+			-DENABLED_LOCAL_INFILE=ON \
 			-DWITH_DEBUG=0
 		''')
 		run('make && make install')

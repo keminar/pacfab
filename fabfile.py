@@ -13,7 +13,7 @@ env.user = 'root'
 env.roledefs = {
 	'host': ['root@192.168.1.33:22']
 }
-env.password = 'cwv0g4ot'
+env.password = '111111'
 
 @parallel
 def php():
@@ -42,7 +42,7 @@ def nginx():
 
 @roles('host')
 @parallel
-def lamp():
+def namp():
 	mysql()
 	apache()
 	php()
