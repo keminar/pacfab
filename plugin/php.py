@@ -29,4 +29,4 @@ def install_php():
 			--with-zlib \
 			--with-freetype-dir 
 		''')
-		run('make && make install')
+		run("make ZEND_EXTRA_LIBS='-liconv' && make install")
