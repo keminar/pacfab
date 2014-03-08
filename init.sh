@@ -1,19 +1,9 @@
 #!/bin/bash
 
-BASE_DIR=/data/install
-INSTALL_DIR=/data/test
-
-DIST_DIR=dist
-SRC_DIR=src
-
 # 初始化系统
 function init
 {
-	mkdir -p $INSTALL_DIR/{bin,opt,srv}
-	mkdir -p $BASE_DIR/{$DIST_DIR,$SRC_DIR}
-
 	apt-get update
-	apt-get install -y build-essential
 	apt-get install -y python python-dev 
 	apt-get install -y libxml2 libxml2-dev libxslt1.1 libxslt1-dev 
 }

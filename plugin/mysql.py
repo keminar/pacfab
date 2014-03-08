@@ -12,11 +12,11 @@ def install_mysql():
 	with cd(conf.BASE_DIR + '/src'):
 		run('tar zxf ../dist/' + conf.MYSQL + '.tar.gz')
 	with cd(conf.BASE_DIR + '/src/' + conf.MYSQL):
-		run('''
-			cmake . -DCMAKE_INSTALL_PREFIX=''' + conf.INSTALL_DIR + '''/opt/mysql \
+		run('rm -f CMakeCache.txt')
+		run('''cmake . -DCMAKE_INSTALL_PREFIX=''' + conf.INSTALL_DIR + '''/opt/mysql \
 			-DSYSCONFDIR=''' + conf.INSTALL_DIR + '''/srv/mysql/3306 \
 			-DMYSQL_DATADIR=''' + conf.INSTALL_DIR + '''/srv/mysql/3306/data \
-			-DMYSQL_UNIX_ADDR=''' + conf.INSTALL_DIR + '''/srv/mysql/3306/mysql.sock \ 
+			-DMYSQL_UNIX_ADDR=''' + conf.INSTALL_DIR + '''/srv/mysql/3306/mysql.sock \
 			-DWITH_INNOBASE_STORAGE_ENGINE=1 \
 			-DMYSQL_TCP_PORT=3306 \
 			-DDEFAULT_CHARSET=utf8 \

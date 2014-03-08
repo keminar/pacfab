@@ -3,6 +3,7 @@
 
 #http://docs.fabfile.org/en/1.8/tutorial.html
 from fabric.api import *
+from plugin.init import *
 from plugin.php import *
 from plugin.mysql import *
 from plugin.cmake import *
@@ -11,9 +12,14 @@ from plugin.nginx import *
 
 env.user = 'root'
 env.roledefs = {
-	'host': ['root@192.168.1.33:22']
+	'host': ['root@192.168.1.33:22'],
+	'vm': ['root@192.168.1.17:22']
 }
-env.password = '111111'
+env.password = '123456'
+
+@parallel
+def init():
+	install_init()
 
 @parallel
 def php():
@@ -32,6 +38,7 @@ def mysql_instance(port="3306"):
 @parallel
 def apache():
 	install_apr()
+	install_pcre()
 	install_openssl()
 	install_apache()
 
