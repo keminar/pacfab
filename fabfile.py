@@ -23,6 +23,7 @@ def init():
 
 @parallel
 def php():
+	install_iconv()
 	install_php()
 
 @parallel

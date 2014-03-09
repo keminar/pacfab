@@ -6,6 +6,14 @@ import sys
 import conf
 from fabric.api import *
 
+def install_iconv():
+	with cd(conf.BASE_DIR + '/dist'):
+		run('wget -c ' + conf.GNU_URL + '/libiconv/' + conf.ICONV + '.tar.gz')
+	with cd(conf.BASE_DIR + '/src'):
+		run('tar zxf ../dist/' + conf.ICONV + '.tar.gz')
+	with cd(conf.BASE_DIR + '/src/' + conf.ICONV):
+		run('./configure --prefix=' + conf.INSTALL_DIR + '/opt/libiconv --enable-extra-encodings ')
+		run('make && make install')
 def install_php():
 	with cd(conf.BASE_DIR + '/dist'):
 		run('wget -c ' + conf.MIRROR + '/php/' + conf.PHP + '.tar.gz')
@@ -27,6 +35,7 @@ def install_php():
 			--with-pdo-mysql=''' + conf.INSTALL_DIR + '''/opt/mysql \
 			--enable-pdo \
 			--with-gettext \
+			--with-iconv=''' + conf.INSTALL_DIR + '''/opt/libiconv \
 			--enable-mbstring \
 			--with-mhash \
 			--with-mcrypt \
@@ -48,4 +57,4 @@ def install_php():
 			--with-zlib \
 			--enable-zip
 		''')
-		run("make ZEND_EXTRA_LIBS='-liconv' && make install")
+		run("make && make install")
