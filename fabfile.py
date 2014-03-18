@@ -1,57 +1,36 @@
-#!/usr/bin/python
 # encoding: utf-8
 
-#http://docs.fabfile.org/en/1.8/tutorial.html
+import os
+import sys
+import importlib
+import conf
 from fabric.api import *
-from plugin.init import *
-from plugin.php import *
-from plugin.mysql import *
-from plugin.cmake import *
-from plugin.apache import *
-from plugin.nginx import *
-
-env.user = 'root'
-env.roledefs = {
-	'host': ['root@192.168.1.33:22'],
-	'vm': ['root@192.168.1.17:22']
-}
-env.password = '123456'
+from module.common.utils import *
 
 @parallel
-def init():
-	install_init()
+def install(name = "", method = "install"):
+	if (name != ""):
+		moduleName = os_module() + '.' + name
+		modulePath = moduleName.replace(".", "/") + '.py'
+		if not os.path.exists(modulePath):
+			moduleName = 'module.common.' + name
+		try:
+			module = importlib.import_module(moduleName)
+		except:
+			print("Software module \"%s\" not found!" % moduleName)
+			sys.exit(1)
+		instanceClass = getattr(module, name)
+		initClass = instanceClass()
+		require = ""
+		for c in dir(initClass):
+			if 'require' == c.lower():
+				func = getattr(initClass, 'require')
+				require = func()
+				break
+		for r in require.split(","):
+			install(r)
+		func = getattr(initClass, method)
+		exitCode = func()
+	else:
+		print("Please input soft name")
 
-@parallel
-def php():
-	install_iconv()
-	install_php()
-
-@parallel
-def mysql():
-	install_cmake()
-	install_mysql()
-	config_mysql()
-
-@parallel
-def mysql_instance(port="3306"):
-	config_mysql(port)
-
-@parallel
-def apache():
-	install_apr()
-	install_pcre()
-	install_openssl()
-	install_apache()
-
-@parallel
-def nginx():
-	install_pcre()
-	install_nginx()
-
-@roles('host')
-@parallel
-def namp():
-	mysql()
-	apache()
-	php()
-	nginx()

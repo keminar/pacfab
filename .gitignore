@@ -1,3 +1,4 @@
 *.pyc
 dist
-src
+logs
+test.sh

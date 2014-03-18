@@ -1,16 +1,15 @@
-#!/usr/bin/python
 # encoding: utf-8
 
 BASE_DIR    = '/data/install'
 INSTALL_DIR = '/data/test'
 
 MIRROR      = 'http://mirror.sohu.com'
-CMAKE_URL   = 'http://www.cmake.org/files/v2.8/'
-APACHE_URL  = 'http://apache.fayea.com/apache-mirror/'
+CMAKE_URL   = 'http://www.cmake.org/files/v2.8'
+APACHE_URL  = 'http://apache.fayea.com/apache-mirror'
 OPENSSL_URL = 'http://www.openssl.org'
-NGINX_URL   = 'http://nginx.org/download/'
-PCRE_URL    = 'http://jaist.dl.sourceforge.net/project/pcre/pcre/8.34/'
-GNU_URL     = 'http://ftp.gnu.org/pub/gnu/'
+NGINX_URL   = 'http://nginx.org/download'
+PCRE_URL    = 'http://jaist.dl.sourceforge.net/project/pcre/pcre/8.34'
+GNU_URL     = 'http://ftp.gnu.org/pub/gnu'
 
 PHP      = 'php-5.4.25'
 MYSQL    = 'mysql-5.5.36'
