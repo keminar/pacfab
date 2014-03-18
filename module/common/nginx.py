@@ -5,7 +5,7 @@ from fabric.api import *
 from module.common.base import base
 class nginx(base):
 	def install(self):
-		self.download(conf.NGINX_URL + conf.NGINX + '.tar.gz')
+		self.download(conf.NGINX_URL + '/' + conf.NGINX + '.tar.gz')
 		self.unzip(conf.NGINX)
 		with cd(conf.BASE_DIR + '/dist/src/' + conf.NGINX):
 			run('''

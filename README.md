@@ -4,21 +4,22 @@ install
 
 使用说明
 -------
-先使用init.sh安装fabfile环境，然后使用fab命令安装软件
+		./setup.sh install:name=anmp
 
 初始化系统
 -------
-fab init
+		./setup.sh install:name=init
 
-安装LAMP
+安装ANMP
 -------
-		fab mysql
-		fab apache
-		fab php
+		./setup.sh install:name=mysql
+		./setup.sh install:name=nginx
+		./setup.sh install:name=php
+		./setup.sh install:name=apache
 安装MYSQL实例
 -------
-		fab mysql_instance:port=3307
+		./setup.sh install:name=mysql,method=instance,port=3307
 
 指定一组机器
 -------
-		fab -R host lamp
+		fab -H localhost1,loclahost2 -p install:name=namp
