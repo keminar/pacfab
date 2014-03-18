@@ -40,3 +40,5 @@ class mysql(base):
 			run('cp support-files/mysql.server ' + conf.INSTALL_DIR + '/bin/mysql.init')
 			run('cp support-files/my-large.cnf ' + conf.INSTALL_DIR + '/srv/mysql/' + port + '/my.cnf')
 			run('chmod +x ' + conf.INSTALL_DIR + '/bin/mysql.init')
+	def require(self):
+		return 'cmake'

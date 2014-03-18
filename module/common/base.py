@@ -12,3 +12,9 @@ class base(object):
 	def download(self, url):
 		with cd(conf.BASE_DIR + '/dist'):
 			run('wget -c ' + url)
+
+	def require(self):
+		pass
+	
+	def check(self):
+		pass
