@@ -7,7 +7,7 @@ class base(object):
 
 	def unzip(self, name, ext = '.tar.gz'):
 		with cd(conf.BASE_DIR + '/dist/src'):
-			run('tar zxf ../' + name + ext)
+			run('gunzip -q < ../' + name + ext + ' | tar xf -')
 
 	def download(self, url):
 		with cd(conf.BASE_DIR + '/dist'):
