@@ -22,3 +22,7 @@ class nginx(base):
 			run("make && make install")
 	def require(self):
 		return 'pcre'
+	def check(self):
+		with quiet():
+			output = run('test -e ' + conf.INSTALL_DIR + '/opt/nginx;echo $?')
+			return output

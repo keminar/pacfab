@@ -1,6 +1,8 @@
 # encoding: utf-8
 
-BASE_DIR    = '/data/install'
+import os
+
+BASE_DIR    = os.getcwd()
 INSTALL_DIR = '/data/test'
 
 MIRROR      = 'http://mirror.sohu.com'

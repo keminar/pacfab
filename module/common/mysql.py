@@ -28,7 +28,7 @@ class mysql(base):
 			run('groupadd -f mysql')
 			run('useradd -g mysql mysql', warn_only=True)
 
-	def config(self, port = '3306'):
+	def instance(self, port = '3306'):
 		run('mkdir -p ' + conf.INSTALL_DIR + '/srv/mysql/' + port + '/data')
 		run('chown -R mysql:mysql ' + conf.INSTALL_DIR + '/srv/mysql/' + port)
 		with cd(conf.INSTALL_DIR + '/opt/mysql'):
@@ -40,5 +40,11 @@ class mysql(base):
 			run('cp support-files/mysql.server ' + conf.INSTALL_DIR + '/bin/mysql.init')
 			run('cp support-files/my-large.cnf ' + conf.INSTALL_DIR + '/srv/mysql/' + port + '/my.cnf')
 			run('chmod +x ' + conf.INSTALL_DIR + '/bin/mysql.init')
+
 	def require(self):
 		return 'cmake'
+
+	def check(self):
+		with quiet():
+			output = run('test -e ' + conf.INSTALL_DIR + '/opt/mysql;echo $?')
+			return output

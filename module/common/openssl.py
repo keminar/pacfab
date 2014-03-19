@@ -12,4 +12,7 @@ class openssl(base):
 				./config --prefix=/usr/local --openssldir=/usr/local/ssl &&\
 				make && make install
 			''')
-
+	def check(self):
+		with quiet():
+			output = run('test -e /usr/local/ssl ;echo $?')
+			return output

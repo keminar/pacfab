@@ -48,3 +48,8 @@ class php(base):
 			run("make && make install")
 	def require(self):
 		return 'openssl,mysql,iconv'
+
+	def check(self):
+		with quiet():
+			output = run('test -e ' + conf.INSTALL_DIR + '/opt/php ;echo $?')
+			return output

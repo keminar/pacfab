@@ -14,7 +14,10 @@ class base(object):
 			run('wget -c ' + url)
 
 	def require(self):
-		pass
+		return ''
 	
 	def check(self):
+		return 0
+
+	def instance(self, port):
 		pass

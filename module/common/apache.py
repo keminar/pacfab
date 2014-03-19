@@ -21,3 +21,7 @@ class apache(base):
 
 	def require(self):
 		return 'apr,openssl'
+	def check(self):
+		with quiet():
+			output = run('test -e ' + conf.INSTALL_DIR + '/opt/apache ;echo $?')
+			return output

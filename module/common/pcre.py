@@ -8,5 +8,8 @@ class pcre(base):
 		self.download(conf.PCRE_URL + '/' + conf.PCRE + '.tar.gz')
 		self.unzip(conf.PCRE)
 		with cd(conf.BASE_DIR + '/dist/src/' + conf.PCRE):
-			run('./configure && make && make install')
-
+			run('./configure -prefix=/usr/local/pcre && make && make install')
+	def check(self):
+		with quiet():
+			output = run('test /usr/local/pcre ;echo $?')
+			return output

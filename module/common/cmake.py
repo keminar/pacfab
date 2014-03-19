@@ -9,3 +9,7 @@ class cmake(base):
 		self.unzip(conf.CMAKE)
 		with cd(conf.BASE_DIR + '/dist/src/' + conf.CMAKE):
 			run('./bootstrap && make && make install')
+	def check(self):
+		with quiet():
+			output = run('which cmake >/dev/null 2>&1;echo $?')
+			return output
