@@ -16,7 +16,7 @@ class vim(base):
 
 	def install(self):
 		with cd(conf.BASE_DIR + '/dist/src/'):
-			run('git clone http://github.com/keminar/vim')
+			run('git clone git@github.com:keminar/vim.git')
 			run('mkdir /root/.vim')
 			run('cp -rf vim/.vim/* /root/.vim/')
 			run('cp -f  vim/.vimrc /root/')
