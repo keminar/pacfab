@@ -21,7 +21,6 @@ class php(base):
 				--with-mysql=''' + conf.INSTALL_DIR + '''/opt/mysql \
 				--with-mysqli=''' + conf.INSTALL_DIR + '''/opt/mysql/bin/mysql_config \
 				--with-pdo-mysql=''' + conf.INSTALL_DIR + '''/opt/mysql \
-				--enable-pdo \
 				--with-gettext \
 				--with-iconv=''' + conf.INSTALL_DIR + '''/opt/libiconv \
 				--enable-mbstring \

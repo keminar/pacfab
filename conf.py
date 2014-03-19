@@ -12,6 +12,7 @@ OPENSSL_URL = 'http://www.openssl.org'
 NGINX_URL   = 'http://nginx.org/download'
 PCRE_URL    = 'http://jaist.dl.sourceforge.net/project/pcre/pcre/8.34'
 GNU_URL     = 'http://ftp.gnu.org/pub/gnu'
+VIM_URL     = 'https://github.com/keminar/vim.git'
 
 PHP      = 'php-5.4.25'
 MYSQL    = 'mysql-5.5.36'

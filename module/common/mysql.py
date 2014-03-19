@@ -27,6 +27,7 @@ class mysql(base):
 			run('make && make install')
 			run('groupadd -f mysql')
 			run('useradd -g mysql mysql', warn_only=True)
+		self.instance()
 
 	def instance(self, port = '3306'):
 		run('mkdir -p ' + conf.INSTALL_DIR + '/srv/mysql/' + port + '/data')
