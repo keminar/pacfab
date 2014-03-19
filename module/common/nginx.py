@@ -20,8 +20,11 @@ class nginx(base):
 			''')
 			run('mkdir -p ' + conf.INSTALL_DIR + '/opt/nginx/temp')
 			run("make && make install")
+
 	def require(self):
-		return 'pcre'
+		str = base.require(self)
+		return str + ',pcre'
+
 	def check(self):
 		with quiet():
 			output = run('test -e ' + conf.INSTALL_DIR + '/opt/nginx;echo $?')

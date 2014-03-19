@@ -46,8 +46,10 @@ class php(base):
 				--enable-zip
 			''')
 			run("make && make install")
+
 	def require(self):
-		return 'openssl,mysql,iconv'
+		str = base.require(self)
+		return str + ',openssl,mysql,iconv'
 
 	def check(self):
 		with quiet():

@@ -42,7 +42,8 @@ class mysql(base):
 			run('chmod +x ' + conf.INSTALL_DIR + '/bin/mysql.init')
 
 	def require(self):
-		return 'cmake'
+		str = base.require(self)
+		return str + ',cmake'
 
 	def check(self):
 		with quiet():

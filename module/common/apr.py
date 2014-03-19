@@ -15,6 +15,7 @@ class apr(base):
 		with cd(conf.BASE_DIR + '/dist/src/' + conf.APR_UTIL):
 			run('./configure --prefix=/usr/local/apr-util --with-apr=/usr/local/apr')
 			run('make && make install')
+
 	def check(self):
 		with quiet():
 			output = run('test -e /usr/local/apr-util >/dev/null 2>&1; echo $?')

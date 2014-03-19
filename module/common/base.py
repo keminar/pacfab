@@ -14,7 +14,7 @@ class base(object):
 			run('wget -c ' + url)
 
 	def require(self):
-		return ''
+		return 'init'
 	
 	def check(self):
 		return 0

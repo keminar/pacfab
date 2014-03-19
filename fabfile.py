@@ -66,11 +66,14 @@ def instance(name = "", port = ""):
 # 用户帮助提示参数
 def usage():
 	paramMap = {
-		"int":"int system",
-		"php":"php",
-		"apache":"apache",
+		"int"    :"int system",
+		"anmp"   :"apache nginx mysql php",
+		"php"    :"php",
+		"apache" :"apache",
 		"mysql":"mysql",
 		"nginx":"nginx",
+		"git"  : "git",
+		"vim"  : "vim config",
 	}
 	print("Please input soft name")
 	print("Softname:")

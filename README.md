@@ -2,24 +2,32 @@ install
 =======
 一键安装多机LAMP等软件环境
 
-使用说明
+安装说明
 -------
-		./setup.sh install:name=anmp
+		./setup.sh -H localhost -u root -p password install:name=anmp
+		说明name值为要安装的软件
+支持的软件
+-------
+		apache              [apache]
+		git                 [git]
+		nginx               [nginx]
+		mysql               [mysql]
+		int                 [int system]
+		anmp                [apache nginx mysql php]
+		php                 [php]
+		vim                 [vim config]
 
-初始化系统
+安装实例
 -------
-		./setup.sh install:name=init
-
-安装ANMP
--------
-		./setup.sh install:name=mysql
-		./setup.sh install:name=nginx
-		./setup.sh install:name=php
-		./setup.sh install:name=apache
-安装MYSQL实例
--------
-		./setup.sh install:name=mysql,method=instance,port=3307
+		./setup.sh -H localhost -u root -p password instance:name=mysql,port=3307
+		说明name值为要配置实例的软件,port为新实例的端口
+支持的软件
+		MYSQL
 
 指定一组机器
 -------
-		fab -H localhost1,loclahost2 -p install:name=namp
+		./setup.sh -H localhost1,loclahost2 -u root -p password install:name=namp
+
+更多参数
+-------
+		./setup.sh 查看帮助

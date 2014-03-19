@@ -20,7 +20,9 @@ class apache(base):
 			run('make && make install')
 
 	def require(self):
-		return 'apr,openssl'
+		str = base.require(self)
+		return str + ',apr,openssl'
+
 	def check(self):
 		with quiet():
 			output = run('test -e ' + conf.INSTALL_DIR + '/opt/apache ;echo $?')
