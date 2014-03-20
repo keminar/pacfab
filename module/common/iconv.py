@@ -2,7 +2,7 @@
 
 import conf
 from fabric.api import *
-from module.common.base import base
+from core.base import base
 class iconv(base):
 	def install(self):
 		self.download(conf.GNU_URL + '/libiconv/' + conf.ICONV + '.tar.gz')

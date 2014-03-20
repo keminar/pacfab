@@ -2,7 +2,7 @@
 
 import conf
 from fabric.api import *
-from module.common.base import base
-class git(base):
+from module.common.git import git
+class git(git):
 	def install(self):
 		run('yum install -y git')

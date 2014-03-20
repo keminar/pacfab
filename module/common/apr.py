@@ -2,7 +2,7 @@
 
 import conf
 from fabric.api import *
-from module.common.base import base
+from core.base import base
 class apr(base):
 	def install(self):
 		self.download(conf.APACHE_URL + '/apr/' + conf.APR + '.tar.gz')

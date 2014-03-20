@@ -31,3 +31,7 @@ install
 更多参数
 -------
 		./setup.sh 查看帮助
+
+本机免密码快捷方式
+------
+		./local.sh install:anmp

@@ -2,7 +2,7 @@
 
 import conf
 from fabric.api import *
-from module.common.base import base
+from core.base import base
 class vim(base):
 
 	def require(self):

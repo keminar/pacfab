@@ -2,7 +2,7 @@
 
 import conf
 from fabric.api import *
-from module.common.base import base
+from core.base import base
 class pcre(base):
 	def install(self):
 		self.download(conf.PCRE_URL + '/' + conf.PCRE + '.tar.gz')

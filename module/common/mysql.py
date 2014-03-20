@@ -3,7 +3,7 @@
 
 import conf
 from fabric.api import *
-from module.common.base import base
+from core.base import base
 class mysql(base):
 	def install(self):
 		self.download(conf.MIRROR + '/mysql/MySQL-5.5/' + conf.MYSQL + '.tar.gz')

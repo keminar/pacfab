@@ -2,7 +2,7 @@
 
 import conf
 from fabric.api import *
-from module.common.base import base
+from core.base import base
 class openssl(base):
 	def install(self):
 		self.download(conf.OPENSSL_URL + '/source/' + conf.OPENSSL + '.tar.gz')
