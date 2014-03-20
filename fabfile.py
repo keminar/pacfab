@@ -29,7 +29,7 @@ def install(name = ""):
 		func = getattr(initClass, 'install')
 		Code = func()
 	else:
-		usage()
+		help()
 
 @parallel
 def instance(name = "", port = ""):
