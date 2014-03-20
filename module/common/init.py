@@ -4,7 +4,7 @@ import conf
 from fabric.api import *
 from core.base import base
 class init(base):
-	def __init__(self):
+	def prepare(self):
 		run('mkdir -p ' + conf.INSTALL_DIR + '/{bin,opt,srv}')
 		run('mkdir -p ' + conf.BASE_DIR + '/dist/src')
 

@@ -7,6 +7,7 @@ from module.common.init import init
 
 class init(init):
 	def install(self):
+		super(init, self).prepare()
 		run('yum update -y')
 		run('yum install -y gcc gcc-c++ gcc-g77 flex bison autoconf automake ncurses-devel')
 		run('yum install -y bzip2-devel zlib-devel libjpeg-devel libpng-devel libtiff-devel freetype-devel gettext-devel')

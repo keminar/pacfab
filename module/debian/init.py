@@ -5,6 +5,7 @@ from fabric.api import *
 from module.common.init import init
 class init(init):
 	def install(self):
+		super(init, self).prepare()
 		run('apt-get update -y')
 		run('apt-get install -y build-essential')
 		run('apt-get install -y libncurses5-dev libxml2-dev zlib1g-dev libbz2-dev libmcrypt-dev libreadline-dev')
