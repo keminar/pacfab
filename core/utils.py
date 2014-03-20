@@ -29,3 +29,11 @@ class utils():
 		instanceClass = getattr(module, name)
 		initClass = instanceClass()
 		return initClass
+
+	def version(self):
+		with quiet():
+			return run('head -n 1 /etc/issue|cut -d" " -f3|cut -d"." -f1')
+
+	def bit(self):
+		with quiet():
+			return run('getconf LONG_BIT')
