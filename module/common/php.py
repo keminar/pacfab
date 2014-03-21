@@ -3,11 +3,16 @@
 import conf
 from fabric.api import *
 from core.base import base
+from core.utils import utils
 class php(base):
 	def install(self):
+		self.bit = utils().bit()
 		self.download(conf.MIRROR + '/php/' + conf.PHP + '.tar.gz')
 		self.unzip(conf.PHP)
 		with cd(conf.BASE_DIR + '/dist/src/' + conf.PHP):
+			# fix php bug #54736
+			if (self.bit == "64"):
+				run('sed -i "s/#ifdef OPENSSL_NO_SSL2/#ifndef OPENSSL_NO_SSL2/g"  ext/openssl/xp_ssl.c');
 			run('''
 				./configure  --prefix=''' + conf.INSTALL_DIR + '''/opt/php \
 				--with-config-file-path=''' + conf.INSTALL_DIR + '''/opt/php/etc \
@@ -45,6 +50,13 @@ class php(base):
 				--enable-zip
 			''')
 			run("make && make install")
+			run('cp php.ini-production ' + conf.INSTALL_DIR + '/opt/php/etc/php.ini')
+		with cd(conf.INSTALL_DIR + '/opt/php/etc'):
+			run('cp php-fpm.conf.default php-fpm.conf')
+			run('sed -i "s/nobody/www/g" php-fpm.conf')
+		utils().adduser('www')
+		self.chkconfig('php')
+		self.path('php')
 
 	def require(self):
 		str = base.require(self)

@@ -10,8 +10,8 @@ class apache(base):
 		with cd(conf.BASE_DIR + '/dist/src/' + conf.APACHE):
 			run('''
 				./configure  --prefix=''' + conf.INSTALL_DIR + '''/opt/apache \
-				--enable-so --enable-ssl --with-ssl=/usr/local/ssl \
-				--enable-rewrite \
+				--enable-ssl --with-ssl=''' + conf.INSTALL_DIR + '''/opt/ssl \
+				--enable-so --enable-rewrite \
 				--enable-module=most \
 				--with-apr=/usr/local/apr \
 				--with-apr-util=/usr/local/apr-util/ \

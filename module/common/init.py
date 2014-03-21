@@ -5,8 +5,13 @@ from fabric.api import *
 from core.base import base
 class init(base):
 	def prepare(self):
-		run('mkdir -p ' + conf.INSTALL_DIR + '/{bin,opt,srv}')
+		run('mkdir -p ' + conf.INSTALL_DIR + '/{app,bin,lib,opt,srv,var}')
 		run('mkdir -p ' + conf.BASE_DIR + '/dist/src')
+		if (self.test(conf.INSTALL_DIR + '/bin/profile.sh') == "1"):
+			run('echo "#!/bin/bash" > ' + conf.INSTALL_DIR + '/bin/profile.sh')
+			run('echo "export PATH=' + conf.INSTALL_DIR + '/bin:\$PATH" >> ' + conf.INSTALL_DIR + '/bin/profile.sh')
+			run('chmod a+x ' + conf.INSTALL_DIR + '/bin/profile.sh')
+			run('ln -sf ' + conf.INSTALL_DIR + '/bin/profile.sh /etc/profile.d/')
 
 	def install(self):
 		run('touch /var/log/install.log')
@@ -15,6 +20,4 @@ class init(base):
 		return ''
 
 	def check(self):
-		with quiet():
-			output = run('test -e /var/log/install.log;echo $?')
-			return output
+		return self.test('/var/log/install.log')

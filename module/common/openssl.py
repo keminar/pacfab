@@ -9,10 +9,12 @@ class openssl(base):
 		self.unzip(conf.OPENSSL)
 		with cd(conf.BASE_DIR + '/dist/src/' + conf.OPENSSL):
 			run('''
-				./config --prefix=/usr/local --openssldir=/usr/local/ssl &&\
-				make && make install
+				./config --prefix=''' + conf.INSTALL_DIR + '''/opt/ssl \
+				--openssldir=''' + conf.INSTALL_DIR + '''/opt/ssl \
+				-fPIC no-gost no-shared no-zlib
 			''')
+			run('make && make install')
 	def check(self):
 		with quiet():
-			output = run('test -e /usr/local/ssl ;echo $?')
+			output = run('test -e ' + conf.INSTALL_DIR + '/opt/ssl ;echo $?')
 			return output

@@ -4,6 +4,7 @@
 import conf
 from fabric.api import *
 from core.base import base
+from core.utils import utils
 class mysql(base):
 	def install(self):
 		self.download(conf.MIRROR + '/mysql/MySQL-5.5/' + conf.MYSQL + '.tar.gz')
@@ -25,9 +26,11 @@ class mysql(base):
 				-DWITH_DEBUG=0
 			''')
 			run('make && make install')
-			run('groupadd -f mysql')
-			run('useradd -g mysql mysql', warn_only=True)
 		self.instance()
+		self.chkconfig('mysql')
+		self.path('mysql')
+		utils().adduser('mysql')
+
 
 	def instance(self, port = '3306'):
 		run('mkdir -p ' + conf.INSTALL_DIR + '/srv/mysql/' + port + '/data')
