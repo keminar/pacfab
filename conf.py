@@ -3,7 +3,7 @@
 import os
 
 BASE_DIR    = os.getcwd()
-INSTALL_DIR = '/data/test'
+INSTALL_DIR = '/data'
 
 MIRROR      = 'http://mirror.sohu.com'
 CMAKE_URL   = 'http://www.cmake.org/files/v2.8'

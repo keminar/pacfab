@@ -17,7 +17,7 @@ class php(base):
 				./configure  --prefix=''' + conf.INSTALL_DIR + '''/opt/php \
 				--with-config-file-path=''' + conf.INSTALL_DIR + '''/opt/php/etc \
 				--with-apxs2=''' + conf.INSTALL_DIR + '''/opt/apache/bin/apxs \
-				--with-openssl \
+				--with-openssl=''' + conf.INSTALL_DIR + '''/opt/ssl \
 				--with-readline \
 				--enable-pcntl \
 				--enable-bcmath \
