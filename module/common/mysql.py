@@ -26,10 +26,10 @@ class mysql(base):
 				-DWITH_DEBUG=0
 			''')
 			run('make && make install')
+		utils().adduser('mysql')
 		self.instance()
 		self.chkconfig('mysql')
 		self.path('mysql')
-		utils().adduser('mysql')
 
 
 	def instance(self, port = '3306'):
@@ -41,7 +41,6 @@ class mysql(base):
 				--basedir=''' + conf.INSTALL_DIR + '''/opt/mysql \
 				--datadir=''' + conf.INSTALL_DIR + '''/srv/mysql/''' + port + '''/data --user=mysql
 			''')
-			run('cp support-files/mysql.server ' + conf.INSTALL_DIR + '/bin/mysql.init')
 			run('cp support-files/my-large.cnf ' + conf.INSTALL_DIR + '/srv/mysql/' + port + '/my.cnf')
 			run('chmod +x ' + conf.INSTALL_DIR + '/bin/mysql.init')
 
