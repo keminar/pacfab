@@ -12,7 +12,7 @@ class init(init):
 		run('yum update -y')
 		run('yum install -y gcc gcc-c++ gcc-g77 flex bison autoconf make automake ncurses-devel')
 		run('yum install -y bzip2-devel zlib-devel libjpeg-devel libpng-devel libtiff-devel freetype-devel gettext-devel')
-		run('yum install -y pam-devel openssl-devel libxml2-devel pcre-devel libcurl-devel openldap-devel readline-devel')
+		run('yum install -y pam-devel libxml2-devel pcre-devel curl curl-devel libcurl-devel openldap-devel readline-devel')
 		if (self.bit == "64"):
 			run('cp -frp /usr/lib64/libldap* /usr/lib/')
 		if (self.epel() == "1"):

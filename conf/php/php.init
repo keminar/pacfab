@@ -1,0 +1,81 @@
+#!/bin/bash
+#
+# Startup script for php-fpm server
+#
+# chkconfig: 345 85 15
+# description: php-fpm server
+# processname: php-fpm
+
+php={INSTALL_DIR}/opt/php/sbin/php-fpm
+pidfile={INSTALL_DIR}/opt/php/var/run/php-fpm.pid
+
+function waiting {
+	local cmd=${1:?Test command required}
+	local timeout=${2:-30}
+	until ($cmd); do
+		if [ $(( --timeout )) -lt 0 ]; then
+			return 1
+		fi
+		echo -n .
+		sleep 1
+	done
+}
+
+function php_is_up {
+	if [ -f $pidfile ]; then
+		ps aux | awk '{print $2}' | grep ^$(cat $pidfile)$ &> /dev/null
+		[ $? -eq 0 ] && return 0
+	fi
+	return 1
+}
+
+function php_is_down {
+	php_is_up && return 1
+	rm -f $pidfile
+	return 0
+}
+
+function php_start {
+	echo -n "Starting php ..."
+	if php_is_down; then
+		if ! $php > /dev/null || ! waiting 'php_is_up'; then
+			echo " failed!"
+			exit 1
+		fi
+	fi
+	echo " done!"
+}
+
+function php_stop {
+	echo -n "Shutting down php ..."
+	if php_is_up; then
+		kill -QUIT $(cat $pidfile) > /dev/null
+		if [ $? -ne 0 ] || ! waiting 'php_is_down'; then
+			echo " failed!"
+			exit 1
+		fi
+	fi
+	echo " done!"
+}
+
+function php_reload {
+	if php_is_up; then
+		echo -n "Reload php ..."
+		kill -USR2 $(cat $pidfile) > /dev/null
+		if [ $? -ne 0 ]; then
+			echo " failed!"
+			exit 1
+		fi
+		echo " done!"
+	else
+		php_start
+	fi
+}
+
+case "$1" in
+	start)		php_start;;
+	stop)		php_stop;;
+	restart)	php_stop; php_start;;
+	reload)		php_reload;;
+	*)			echo "Usage: $0 {start|stop|restart|reload}"; exit 1;;
+esac

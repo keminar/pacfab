@@ -1,0 +1,79 @@
+#!/bin/bash
+#
+# Startup script for nginx
+#
+# chkconfig: 345 85 15
+# description: Nginx server
+# processname: nginx
+
+nginx={INSTALL_DIR}/opt/nginx/sbin/nginx
+pidfile={INSTALL_DIR}/opt/nginx/logs/nginx.pid
+
+function waiting {
+	local cmd=${1:?Test command required}
+	local timeout=${2:-30}
+	until ($cmd); do
+		if [ $(( --timeout )) -lt 0 ]; then
+			return 1
+		fi
+		echo -n .
+		sleep 1
+	done
+}
+
+function nginx_is_up {
+	if [ -f $pidfile ]; then
+		ps aux | awk '{print $2}' | grep ^$(cat $pidfile)$ > /dev/null
+		[ $? -eq 0 ] && return 0
+	fi
+	return 1
+}
+
+function nginx_is_down {
+	nginx_is_up && return 1
+	rm -f $pidfile
+	return 0
+}
+
+function nginx_start {
+	echo -n "Starting nginx ..."
+	if nginx_is_down; then
+		if ! $nginx > /dev/null || ! waiting 'nginx_is_up'; then
+			echo " failed!"
+			exit 1
+		fi
+	fi
+	echo " done!"
+}
+
+function nginx_stop {
+	echo -n "Shutting down nginx ..."
+	if nginx_is_up; then
+		if ! $nginx -s quit > /dev/null || ! waiting 'nginx_is_down'; then
+			echo " failed!"
+			exit 1
+		fi
+	fi
+	echo " done!"
+}
+
+function nginx_reload {
+	if nginx_is_up; then
+		echo -n "Reload nginx ..."
+		if ! $nginx -s reload > /dev/null; then
+			echo " failed!"
+			exit 1
+		fi
+		echo " done!"
+	else
+		nginx_start
+	fi
+}
+
+case "$1" in
+	start)		nginx_start;;
+	stop)		nginx_stop;;
+	restart)	nginx_stop; nginx_start;;
+	reload)		nginx_reload;;
+	*)			echo "Usage: $0 {start|stop|restart|reload}"; exit 1;;
+esac

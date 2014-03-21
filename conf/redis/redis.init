@@ -1,0 +1,71 @@
+#!/bin/bash
+#
+# Startup script for redis server
+#
+# chkconfig: 345 85 15
+# description: Redis is a persistent key-value database
+# processname: redis
+
+port=${2:-6379}
+redisserver="{INSTALL_DIR}/opt/redis/bin/redis-server"
+rediscli="{INSTALL_DIR}/opt/redis/bin/redis-cli"
+pidfile="{INSTALL_DIR}/srv/redis/${port}/redis.pid"
+conf="{INSTALL_DIR}/srv/redis/${port}/redis.conf"
+host=$(grep ^bind $conf |awk '{print $2}')
+
+function waiting {
+    local cmd=${1:?Test command required}
+    local timeout=${2:-30}
+    until ($cmd); do
+        if [ $(( --timeout )) -lt 0 ]; then
+            return 1
+        fi
+        echo -n .
+        sleep 1
+    done
+}
+
+function redis_is_up {
+	if [ -f $pidfile ]; then
+		ps aux | awk '{print $2}' | grep ^$(cat $pidfile)$ > /dev/null
+		[ $? -eq 0 ] && return 0
+	fi
+	return 1
+}
+
+function redis_is_down {
+	redis_is_up && return 1
+	rm -f $pidfile
+	return 0
+}
+
+function redis_start {
+	echo -n "Starting Redis server ..."
+	if redis_is_down ; then
+		$redisserver $conf
+		if [ $? -ne 0 ] || ! waiting 'redis_is_up'; then
+            echo " failed!"
+			exit 1
+		fi
+	fi
+	echo "done!"
+}
+
+function redis_stop {
+	echo -n "Shutting down Redis ..."
+	if redis_is_up; then
+		$rediscli -h $host -p $port shutdown
+		if [ $? -ne 0 ] || ! waiting 'redis_is_down'; then
+            echo " failed!"
+			exit 1
+		fi
+	fi
+	echo "done!"
+}
+
+case "$1" in
+    start)      redis_start;;
+    stop)       redis_stop;;
+    restart)    redis_stop; redis_start;;
+	*)          echo "Usage: $0 {start|stop|restart} [port=6379]"; exit 1;;
+esac

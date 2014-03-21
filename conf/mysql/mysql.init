@@ -1,0 +1,71 @@
+#!/bin/bash
+#
+# Startup script for mysql server
+#
+# chkconfig: 345 85 15
+# description: MySQL database server
+# processname: mysqld
+
+port=${2:-3306}
+conf={INSTALL_DIR}/srv/mysql/$port/my.cnf
+socket={INSTALL_DIR}/srv/mysql/$port/mysql.sock
+pidfile={INSTALL_DIR}/srv/mysql/$port/mysql.pid
+mysqld={INSTALL_DIR}/opt/mysql/bin/mysqld_safe
+mysqladmin={INSTALL_DIR}/opt/mysql/bin/mysqladmin
+
+function waiting {
+	local cmd=${1:?Test command required}
+	local timeout=${2:-30}
+	until ($cmd); do
+		if [ $(( --timeout )) -lt 0 ]; then
+			return 1
+		fi
+		echo -n .
+		sleep 1
+	done
+}
+
+function mysql_is_up {
+	if [ -f $pidfile ] && [ -S $socket ]; then
+		ps aux | awk '{print $2}' | grep ^$(cat $pidfile)$ > /dev/null
+		[ $? -eq 0 ] && return 0
+	fi
+	return 1
+}
+
+function mysql_is_down {
+	mysql_is_up && return 1
+	rm -f $socket $pidfile
+	return 0
+}
+
+function mysql_start {
+	echo -n "Starting mysql ..."
+	if mysql_is_down; then
+		$mysqld --defaults-extra-file=$conf > /dev/null &
+		if [ $? -ne 0 ] || ! waiting 'mysql_is_up'; then
+			echo " failed!"
+			exit 1
+		fi
+	fi
+	echo " done!"
+}
+
+function mysql_stop {
+	echo -n "Shutting down mysql ..."
+	if mysql_is_up; then
+		$mysqladmin --defaults-extra-file=$conf shutdown > /dev/null
+		if [ $? -ne 0 ] || ! waiting 'mysql_is_down'; then
+			echo " failed!"
+			exit 1
+		fi
+	fi
+	echo " done!"
+}
+
+case "$1" in
+	start)		mysql_start;;
+	stop)		mysql_stop;;
+	restart)	mysql_stop; mysql_start;;
+	*)			echo "Usage: $0 {start|stop|restart} [port=3306]"; exit 1;;
+esac
