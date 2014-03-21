@@ -9,7 +9,7 @@ class init(base):
 		run('mkdir -p ' + conf.BASE_DIR + '/dist/src')
 		if (self.test(conf.INSTALL_DIR + '/bin/profile.sh') == "1"):
 			run('echo "#!/bin/bash" > ' + conf.INSTALL_DIR + '/bin/profile.sh')
-			run('echo "export PATH=' + conf.INSTALL_DIR + '/bin:\$PATH" >> ' + conf.INSTALL_DIR + '/bin/profile.sh')
+			run('echo "export PATH=' + conf.INSTALL_DIR + '/bin:\\\$PATH" >> ' + conf.INSTALL_DIR + '/bin/profile.sh')
 			run('chmod a+x ' + conf.INSTALL_DIR + '/bin/profile.sh')
 			run('ln -sf ' + conf.INSTALL_DIR + '/bin/profile.sh /etc/profile.d/')
 
