@@ -1,0 +1,79 @@
+#!/bin/bash
+#
+# Startup script for apache
+#
+# chkconfig: 345 85 15
+# description: Apache server
+# processname: apache
+
+apache=<INSTALL_DIR>/opt/apache/bin/apachectl
+pidfile=<INSTALL_DIR>/opt/apache/logs/httpd.pid
+
+function waiting {
+	local cmd=${1:?Test command required}
+	local timeout=${2:-30}
+	until ($cmd); do
+		if [ $(( --timeout )) -lt 0 ]; then
+			return 1
+		fi
+		echo -n .
+		sleep 1
+	done
+}
+
+function apache_is_up {
+	if [ -f $pidfile ]; then
+		ps aux | awk '{print $2}' | grep ^$(cat $pidfile)$ > /dev/null
+		[ $? -eq 0 ] && return 0
+	fi
+	return 1
+}
+
+function apache_is_down {
+	apache_is_up && return 1
+	rm -f $pidfile
+	return 0
+}
+
+function apache_start {
+	echo -n "Starting apache ..."
+	if apache_is_down; then
+		if ! $apache > /dev/null || ! waiting 'apache_is_up'; then
+			echo " failed!"
+			exit 1
+		fi
+	fi
+	echo " done!"
+}
+
+function apache_stop {
+	echo -n "Shutting down apache ..."
+	if apache_is_up; then
+		if ! $apache stop > /dev/null || ! waiting 'apache_is_down'; then
+			echo " failed!"
+			exit 1
+		fi
+	fi
+	echo " done!"
+}
+
+function apache_reload {
+	if apache_is_up; then
+		echo -n "Reload apache ..."
+		if ! $apache graceful > /dev/null; then
+			echo " failed!"
+			exit 1
+		fi
+		echo " done!"
+	else
+		apache_start
+	fi
+}
+
+case "$1" in
+	start)		apache_start;;
+	stop)		apache_stop;;
+	restart)	apache_stop; apache_start;;
+	reload)		apache_reload;;
+	*)			echo "Usage: $0 {start|stop|restart|reload}"; exit 1;;
+esac

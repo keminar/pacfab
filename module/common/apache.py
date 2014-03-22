@@ -18,6 +18,9 @@ class apache(base):
 				--disable-ipv6
 			''')
 			run('make && make install')
+		run('sed -i "s/Listen 80/Listen 88/" ' + conf.INSTALL_DIR + '/opt/apache/conf/httpd.conf')
+		self.chkconfig('apache')
+		self.path('apache')
 		run('touch ' + conf.INSTALL_DIR + '/opt/apache/.install.log')
 
 	def require(self):

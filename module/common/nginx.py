@@ -28,14 +28,15 @@ class nginx(base):
 			run('mkdir -p ' + conf.INSTALL_DIR + '/opt/nginx/temp')
 			run('mkdir -p ' + conf.INSTALL_DIR + '/opt/nginx/conf/vhosts')
 			run('mkdir -p ' + conf.INSTALL_DIR + '/app/app_default/wwwroot')
+		put(conf.BASE_DIR + '/conf/nginx/conf/*', conf.INSTALL_DIR + '/opt/nginx/conf/')
+		with quiet():
+			cpu = run('cat /proc/cpuinfo | grep processor | wc -l')
+		run('sed -i "s/<worker_processes>/' + cpu + '/" ' + conf.INSTALL_DIR + '/opt/nginx/conf/nginx.conf')
+		utils().adduser('www')
 		self.chkconfig('nginx')
 		self.path('nginx')
-		utils().adduser('www')
 		put(conf.BASE_DIR + '/conf/nginx/nginx_cut_log.sh', conf.INSTALL_DIR + '/bin/')
 		run('chmod a+x ' + conf.INSTALL_DIR + '/bin/nginx_cut_log.sh')
-		put(conf.BASE_DIR + '/conf/nginx/conf/*', conf.INSTALL_DIR + '/opt/nginx/conf/')
-		cpu = run('cat /proc/cpuinfo | grep processor | wc -l')
-		run('sed -i "s/<worker_processes>/' + cpu + '/" ' + conf.INSTALL_DIR + '/opt/nginx/conf/nginx.conf')
 		run('touch ' + conf.INSTALL_DIR + '/opt/nginx/.install.log')
 
 	def require(self):
