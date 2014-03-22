@@ -13,10 +13,12 @@ class apr(base):
 		self.download(conf.APACHE_URL + '/apr/' + conf.APR_UTIL + '.tar.gz')
 		self.unzip(conf.APR_UTIL)
 		with cd(conf.BASE_DIR + '/dist/src/' + conf.APR_UTIL):
-			run('./configure --prefix=/usr/local/apr-util --with-apr=/usr/local/apr')
+			run('''
+				./configure --prefix=/usr/local/apr-util \
+				--with-apr=/usr/local/apr
+				''')
 			run('make && make install')
+		run('touch /usr/local/apr/.install.log')
 
 	def check(self):
-		with quiet():
-			output = run('test -e /usr/local/apr-util >/dev/null 2>&1; echo $?')
-			return output
+		return self.test('/usr/local/apr/.install.log')

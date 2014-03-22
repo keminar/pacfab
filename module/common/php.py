@@ -57,12 +57,11 @@ class php(base):
 		utils().adduser('www')
 		self.chkconfig('php')
 		self.path('php')
+		run('touch ' + conf.INSTALL_DIR + '/opt/php/.install.log')
 
 	def require(self):
 		str = base.require(self)
 		return str + ',openssl,mysql,iconv'
 
 	def check(self):
-		with quiet():
-			output = run('test -e ' + conf.INSTALL_DIR + '/opt/php ;echo $?')
-			return output
+		return self.test(conf.INSTALL_DIR + '/opt/php/.install.log')

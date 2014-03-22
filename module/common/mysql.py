@@ -27,9 +27,10 @@ class mysql(base):
 			''')
 			run('make && make install')
 		utils().adduser('mysql')
-		self.instance()
 		self.chkconfig('mysql')
 		self.path('mysql')
+		self.instance()
+		run('touch ' + conf.INSTALL_DIR + '/opt/mysql/.install.log')
 
 
 	def instance(self, port = '3306'):
@@ -42,13 +43,10 @@ class mysql(base):
 				--datadir=''' + conf.INSTALL_DIR + '''/srv/mysql/''' + port + '''/data --user=mysql
 			''')
 			run('cp support-files/my-large.cnf ' + conf.INSTALL_DIR + '/srv/mysql/' + port + '/my.cnf')
-			run('chmod +x ' + conf.INSTALL_DIR + '/bin/mysql.init')
 
 	def require(self):
 		str = base.require(self)
 		return str + ',cmake'
 
 	def check(self):
-		with quiet():
-			output = run('test -e ' + conf.INSTALL_DIR + '/opt/mysql;echo $?')
-			return output
+		return self.test(conf.INSTALL_DIR + '/opt/mysql/.install.log')

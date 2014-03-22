@@ -16,6 +16,7 @@ class nginx(base):
 				--with-http_realip_module \
 				--with-http_stub_status_module \
 				--with-http_ssl_module \
+				--with-pcre \
 				--with-openssl=''' + conf.BASE_DIR + '/dist/src/' + conf.OPENSSL + ''' \
 				--http-client-body-temp-path=''' + conf.INSTALL_DIR + '''/opt/nginx/temp/client-body \
 				--http-proxy-temp-path=''' + conf.INSTALL_DIR + '''/opt/nginx/temp/proxy \
@@ -35,13 +36,11 @@ class nginx(base):
 		put(conf.BASE_DIR + '/conf/nginx/conf/*', conf.INSTALL_DIR + '/opt/nginx/conf/')
 		cpu = run('cat /proc/cpuinfo | grep processor | wc -l')
 		run('sed -i "s/<worker_processes>/' + cpu + '/" ' + conf.INSTALL_DIR + '/opt/nginx/conf/nginx.conf')
-		run('touch ' + conf.INSTALL_DIR + '/opt/nginx/install.log')
+		run('touch ' + conf.INSTALL_DIR + '/opt/nginx/.install.log')
 
 	def require(self):
 		str = base.require(self)
 		return str + ',pcre'
 
 	def check(self):
-		with quiet():
-			output = run('test -e ' + conf.INSTALL_DIR + '/opt/nginx/install.log;echo $?')
-			return output
+		return self.test(conf.INSTALL_DIR + '/opt/nginx/.install.log')

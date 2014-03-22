@@ -18,12 +18,11 @@ class apache(base):
 				--disable-ipv6
 			''')
 			run('make && make install')
+		run('touch ' + conf.INSTALL_DIR + '/opt/apache/.install.log')
 
 	def require(self):
 		str = base.require(self)
 		return str + ',apr,openssl'
 
 	def check(self):
-		with quiet():
-			output = run('test -e ' + conf.INSTALL_DIR + '/opt/apache ;echo $?')
-			return output
+		return self.test(conf.INSTALL_DIR + '/opt/apache/.install.log')

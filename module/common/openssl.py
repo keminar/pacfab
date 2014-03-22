@@ -14,7 +14,7 @@ class openssl(base):
 				-fPIC no-gost no-shared no-zlib
 			''')
 			run('make && make install')
+		run('touch ' + conf.INSTALL_DIR + '/opt/ssl/.install.log')
+
 	def check(self):
-		with quiet():
-			output = run('test -e ' + conf.INSTALL_DIR + '/opt/ssl ;echo $?')
-			return output
+		return self.test(conf.INSTALL_DIR + '/opt/ssl/.install.log')

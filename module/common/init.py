@@ -14,10 +14,10 @@ class init(base):
 			run('ln -sf ' + conf.INSTALL_DIR + '/bin/profile.sh /etc/profile.d/')
 
 	def install(self):
-		run('touch /var/log/install.log')
+		run('touch /var/log/.install.log')
 
 	def require(self):
 		return ''
 
 	def check(self):
-		return self.test('/var/log/install.log')
+		return self.test('/var/log/.install.log')
