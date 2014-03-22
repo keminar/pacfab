@@ -30,11 +30,12 @@ class nginx(base):
 		self.chkconfig('nginx')
 		self.path('nginx')
 		utils().adduser('www')
-		run('cp ' + conf.BASE_DIR + '/conf/nginx/nginx_cut_log.sh ' + conf.INSTALL_DIR + '/bin/')
+		put(conf.BASE_DIR + '/conf/nginx/nginx_cut_log.sh', conf.INSTALL_DIR + '/bin/')
 		run('chmod a+x ' + conf.INSTALL_DIR + '/bin/nginx_cut_log.sh')
-		run('cp -rf ' + conf.BASE_DIR + '/conf/nginx/conf/* ' + conf.INSTALL_DIR + '/opt/nginx/conf/')
+		put(conf.BASE_DIR + '/conf/nginx/conf/*', conf.INSTALL_DIR + '/opt/nginx/conf/')
 		cpu = run('cat /proc/cpuinfo | grep processor | wc -l')
 		run('sed -i "s/<worker_processes>/' + cpu + '/" ' + conf.INSTALL_DIR + '/opt/nginx/conf/nginx.conf')
+		run('touch ' + conf.INSTALL_DIR + '/opt/nginx/install.log')
 
 	def require(self):
 		str = base.require(self)
@@ -42,5 +43,5 @@ class nginx(base):
 
 	def check(self):
 		with quiet():
-			output = run('test -e ' + conf.INSTALL_DIR + '/opt/nginx;echo $?')
+			output = run('test -e ' + conf.INSTALL_DIR + '/opt/nginx/install.log;echo $?')
 			return output
