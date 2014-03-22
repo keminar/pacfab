@@ -6,8 +6,8 @@
 # description: Nginx server
 # processname: nginx
 
-nginx={INSTALL_DIR}/opt/nginx/sbin/nginx
-pidfile={INSTALL_DIR}/opt/nginx/logs/nginx.pid
+nginx=<INSTALL_DIR>/opt/nginx/sbin/nginx
+pidfile=<INSTALL_DIR>/opt/nginx/logs/nginx.pid
 
 function waiting {
 	local cmd=${1:?Test command required}

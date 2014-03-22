@@ -7,10 +7,10 @@
 # processname: redis
 
 port=${2:-6379}
-redisserver="{INSTALL_DIR}/opt/redis/bin/redis-server"
-rediscli="{INSTALL_DIR}/opt/redis/bin/redis-cli"
-pidfile="{INSTALL_DIR}/srv/redis/${port}/redis.pid"
-conf="{INSTALL_DIR}/srv/redis/${port}/redis.conf"
+redisserver="<INSTALL_DIR>/opt/redis/bin/redis-server"
+rediscli="<INSTALL_DIR>/opt/redis/bin/redis-cli"
+pidfile="<INSTALL_DIR>/srv/redis/${port}/redis.pid"
+conf="<INSTALL_DIR>/srv/redis/${port}/redis.conf"
 host=$(grep ^bind $conf |awk '{print $2}')
 
 function waiting {

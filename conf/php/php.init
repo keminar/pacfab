@@ -6,8 +6,8 @@
 # description: php-fpm server
 # processname: php-fpm
 
-php={INSTALL_DIR}/opt/php/sbin/php-fpm
-pidfile={INSTALL_DIR}/opt/php/var/run/php-fpm.pid
+php=<INSTALL_DIR>/opt/php/sbin/php-fpm
+pidfile=<INSTALL_DIR>/opt/php/var/run/php-fpm.pid
 
 function waiting {
 	local cmd=${1:?Test command required}

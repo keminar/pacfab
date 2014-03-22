@@ -7,11 +7,11 @@
 # processname: mysqld
 
 port=${2:-3306}
-conf={INSTALL_DIR}/srv/mysql/$port/my.cnf
-socket={INSTALL_DIR}/srv/mysql/$port/mysql.sock
-pidfile={INSTALL_DIR}/srv/mysql/$port/mysql.pid
-mysqld={INSTALL_DIR}/opt/mysql/bin/mysqld_safe
-mysqladmin={INSTALL_DIR}/opt/mysql/bin/mysqladmin
+conf=<INSTALL_DIR>/srv/mysql/$port/my.cnf
+socket=<INSTALL_DIR>/srv/mysql/$port/mysql.sock
+pidfile=<INSTALL_DIR>/srv/mysql/$port/mysql.pid
+mysqld=<INSTALL_DIR>/opt/mysql/bin/mysqld_safe
+mysqladmin=<INSTALL_DIR>/opt/mysql/bin/mysqladmin
 
 function waiting {
 	local cmd=${1:?Test command required}

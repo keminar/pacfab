@@ -31,7 +31,7 @@ class base(object):
 	# 开机启动
 	def chkconfig(self, name):
 		put(conf.BASE_DIR + '/conf/' + name + '/' + name + '.init', conf.INSTALL_DIR + '/bin/')
-		run('sed -i "s/{INSTALL_DIR}/' + conf.INSTALL_DIR + '/g"  ' + conf.INSTALL_DIR + '/bin/' + name + '.init')
+		run('sed -i "s/<INSTALL_DIR>/' + conf.INSTALL_DIR + '/g"  ' + conf.INSTALL_DIR + '/bin/' + name + '.init')
 		run('ln -sf ' + conf.INSTALL_DIR + '/bin/' + name + '.init /etc/init.d/' + name)
 		with quiet(): # redhat
 			output = run('which chkconfig >/dev/null 2>&1;echo $?')
