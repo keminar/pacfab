@@ -19,6 +19,7 @@ class apache(base):
 			''')
 			run('make && make install')
 		run('sed -i "s/Listen 80/Listen 88/" ' + conf.INSTALL_DIR + '/opt/apache/conf/httpd.conf')
+		run('sed -i "s/#ServerName www.example.com:80/ServerName 127.0.0.1:88/" ' + conf.INSTALL_DIR + '/opt/apache/conf/httpd.conf')
 		self.chkconfig('apache')
 		self.path('apache')
 		run(conf.INSTALL_DIR + '/bin/apache.init start')
