@@ -8,7 +8,7 @@ class init(init):
 	def install(self):
 		super(init, self).prepare()
 		with quiet():
-			if (run('grep "Load profiles from /etc/profile.d" /etc/profile') == ""):
+			if (run('grep "/etc/profile.d" /etc/profile') == ""):
 				put(conf.BASE_DIR + '/conf/init/profile.tpl', conf.BASE_DIR)
 				run('cat ' + conf.BASE_DIR + '/profile.tpl >> /etc/profile')
 		run('apt-get update -y')
