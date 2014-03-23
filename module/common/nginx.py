@@ -37,6 +37,7 @@ class nginx(base):
 		self.path('nginx')
 		put(conf.BASE_DIR + '/conf/nginx/nginx_cut_log.sh', conf.INSTALL_DIR + '/bin/')
 		run('chmod a+x ' + conf.INSTALL_DIR + '/bin/nginx_cut_log.sh')
+		run(conf.INSTALL_DIR + '/bin/nginx.init start')
 		run('touch ' + conf.INSTALL_DIR + '/opt/nginx/.install.log')
 
 	def require(self):

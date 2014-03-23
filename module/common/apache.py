@@ -21,6 +21,7 @@ class apache(base):
 		run('sed -i "s/Listen 80/Listen 88/" ' + conf.INSTALL_DIR + '/opt/apache/conf/httpd.conf')
 		self.chkconfig('apache')
 		self.path('apache')
+		run(conf.INSTALL_DIR + '/bin/apache.init start')
 		run('touch ' + conf.INSTALL_DIR + '/opt/apache/.install.log')
 
 	def require(self):

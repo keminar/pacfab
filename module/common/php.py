@@ -51,12 +51,11 @@ class php(base):
 			''')
 			run("make && make install")
 			run('cp php.ini-production ' + conf.INSTALL_DIR + '/opt/php/etc/php.ini')
-		with cd(conf.INSTALL_DIR + '/opt/php/etc'):
-			run('cp php-fpm.conf.default php-fpm.conf')
-			run('sed -i "s/nobody/www/g" php-fpm.conf')
+		put(conf.BASE_DIR + '/conf/php/php-fpm.conf', conf.INSTALL_DIR + '/opt/php/etc/php-fpm.conf')
 		utils().adduser('www')
 		self.chkconfig('php')
 		self.path('php')
+		run(conf.INSTALL_DIR + '/bin/php.init start')
 		run('touch ' + conf.INSTALL_DIR + '/opt/php/.install.log')
 
 	def require(self):
