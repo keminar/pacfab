@@ -7,6 +7,10 @@ from module.common.init import init
 class init(init):
 	def install(self):
 		super(init, self).prepare()
+		with quiet():
+			if (run('grep "Load profiles from /etc/profile.d" /etc/profile') == ""):
+				put(conf.BASE_DIR + '/conf/init/profile.tpl', conf.BASE_DIR)
+				run('cat ' + conf.BASE_DIR + '/profile.tpl >> /etc/profile')
 		run('apt-get update -y')
 		run('apt-get install -y build-essential wget')
 		run('apt-get install -y libncurses5-dev libxml2-dev zlib1g-dev libbz2-dev libmcrypt-dev libreadline-dev')
