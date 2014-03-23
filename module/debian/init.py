@@ -2,6 +2,7 @@
 
 import conf
 from fabric.api import *
+from core.utils import utils
 from module.common.init import init
 class init(init):
 	def install(self):

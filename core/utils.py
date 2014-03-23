@@ -22,6 +22,11 @@ class utils():
 		with quiet():
 			return run('head -n 1 /etc/issue|cut -d" " -f3|cut -d"." -f1')
 
+	# 内存
+	def mem(self):
+		with quiet():
+			return run("cat /proc/meminfo |grep MemTotal|awk -F ' ' '{print int($2/1024)}'")
+
 	# 自定义模块
 	def module(self):
 		os = self.release()

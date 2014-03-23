@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # encoding: utf-8
 
+import string
+import re
 import conf
 from fabric.api import *
 from core.base import base
@@ -34,15 +36,37 @@ class mysql(base):
 
 
 	def instance(self, port = '3306'):
-		run('mkdir -p ' + conf.INSTALL_DIR + '/srv/mysql/' + port + '/data')
-		run('chown -R mysql:mysql ' + conf.INSTALL_DIR + '/srv/mysql/' + port)
+		mem = string.atoi(utils().mem())
+		if ( mem >= 4000):
+			mycnf = 'my-innodb-heavy-4G.cnf'
+		elif (mem >= 1000):
+			mycnf = 'my-huge.cnf'
+		elif (mem >= 512):
+			mycnf = 'my-large.cnf'
+		elif (mem >= 128):
+			mycnf = 'my-medium.cnf'
+		else:
+			mycnf = 'my-small.cnf'
+		dstPath = conf.INSTALL_DIR + '/srv/mysql/' + port
+		run('mkdir -p ' + dstPath + '/{data,binlogs}')
 		with cd(conf.INSTALL_DIR + '/opt/mysql'):
+			run('cp support-files/' + mycnf + ' ' + dstPath + '/my.cnf')
+			run('sed -i "s/3306/' + port + '/g" ' + dstPath + '/my.cnf')
+			with quiet():
+				line = run("grep -n  '\[mysqld\]' " + dstPath + "/my.cnf |tail -n 1 | awk -F ':' '{print $1}'")
+			run('sed -i "' + line + 'a\slow_query_log_file = ' + re.escape(dstPath + '/mysql-slow.log') + '" ' + dstPath + '/my.cnf')
+			run('sed -i "' + line + 'a\log-bin = ' + re.escape(dstPath + '/binlogs/mysql-bin') + '" ' + dstPath + '/my.cnf')
+			run('sed -i "' + line + 'a\log-error = ' + re.escape(dstPath + '/mysql-error.log') + '" ' + dstPath + '/my.cnf')
+			run('sed -i "' + line + 'a\pid-file = ' + re.escape(dstPath + '/mysql.pid') + '" ' + dstPath + '/my.cnf')
+			run('sed -i "' + line + 'a\datadir = ' + re.escape(dstPath + '/data') + '" ' + dstPath + '/my.cnf')
+			run('sed -i "' + line + 'a\\basedir = ' + re.escape(conf.INSTALL_DIR + '/opt/mysql') + '" ' + dstPath + '/my.cnf')
+			run('sed -i "' + line + 'a\user = mysql' + '" ' + dstPath + '/my.cnf')
+			run('chown -R mysql:mysql ' + dstPath)
 			run('''
 				./scripts/mysql_install_db \
-				--basedir=''' + conf.INSTALL_DIR + '''/opt/mysql \
-				--datadir=''' + conf.INSTALL_DIR + '''/srv/mysql/''' + port + '''/data --user=mysql
+				--defaults-file=''' + conf.INSTALL_DIR + '''/srv/mysql/''' + port + '''/my.cnf
 			''')
-			run('cp support-files/my-large.cnf ' + conf.INSTALL_DIR + '/srv/mysql/' + port + '/my.cnf')
+		run(conf.INSTALL_DIR + '/bin/mysql.init start ' + port)
 
 	def require(self):
 		str = base.require(self)
