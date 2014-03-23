@@ -56,7 +56,16 @@ class php(base):
 		self.chkconfig('php')
 		self.path('php')
 		run(conf.INSTALL_DIR + '/bin/php.init start')
+		self.apache()
 		run('touch ' + conf.INSTALL_DIR + '/opt/php/.install.log')
+
+	def apache(self):
+		if (self.test(conf.INSTALL_DIR + '/opt/apache') == 1):
+			return
+		with quiet():
+			line = run("grep -n  '#AddHandler cgi-script .cgi' " + conf.INSTALL_DIR + "/opt/apache/conf/httpd.conf |tail -n 1 | awk -F ':' '{print $1}'")
+		run('sed -i "' + line + 'a\    AddHandler application\/x-httpd-php .php" ' + conf.INSTALL_DIR + '/opt/apache/conf/httpd.conf')
+		run(conf.INSTALL_DIR + '/bin/apache.init start')
 
 	def require(self):
 		str = base.require(self)
