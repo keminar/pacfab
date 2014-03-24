@@ -42,7 +42,7 @@ function mysql_is_down {
 function mysql_start {
 	echo -n "Starting mysql ..."
 	if mysql_is_down; then
-		$mysqld --defaults-extra-file=$conf > /dev/null &
+		$mysqld --defaults-file=$conf > /dev/null &
 		if [ $? -ne 0 ] || ! waiting 'mysql_is_up'; then
 			echo " failed!"
 			exit 1
@@ -54,7 +54,7 @@ function mysql_start {
 function mysql_stop {
 	echo -n "Shutting down mysql ..."
 	if mysql_is_up; then
-		$mysqladmin --defaults-extra-file=$conf shutdown > /dev/null
+		$mysqladmin --defaults-file=$conf shutdown > /dev/null
 		if [ $? -ne 0 ] || ! waiting 'mysql_is_down'; then
 			echo " failed!"
 			exit 1

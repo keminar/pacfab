@@ -13,10 +13,13 @@ class php(base):
 			# fix php bug #54736
 			if (self.bit == "64"):
 				run('sed -i "s/#ifdef OPENSSL_NO_SSL2/#ifndef OPENSSL_NO_SSL2/g"  ext/openssl/xp_ssl.c');
+			with_apache = ''
+			if (self.test(conf.INSTALL_DIR + '/opt/apache') == 0):
+				with_apache = '--with-apxs2=' + conf.INSTALL_DIR + '/opt/apache/bin/apxs'
 			run('''
 				./configure  --prefix=''' + conf.INSTALL_DIR + '''/opt/php \
 				--with-config-file-path=''' + conf.INSTALL_DIR + '''/opt/php/etc \
-				--with-apxs2=''' + conf.INSTALL_DIR + '''/opt/apache/bin/apxs \
+				''' + with_apache + ''' \
 				--with-openssl=''' + conf.INSTALL_DIR + '''/opt/ssl \
 				--with-readline \
 				--enable-pcntl \
