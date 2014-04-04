@@ -1,10 +1,4 @@
 #!/bin/bash
-#
-# Startup script for php-fpm server
-#
-# chkconfig: 345 85 15
-# description: php-fpm server
-# processname: php-fpm
 
 php=<INSTALL_DIR>/opt/php/sbin/php-fpm
 pidfile=<INSTALL_DIR>/opt/php/var/run/php-fpm.pid

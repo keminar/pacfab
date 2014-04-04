@@ -1,10 +1,5 @@
 #!/bin/bash
-#
-# Startup script for mysql server
-#
-# chkconfig: 345 85 15
-# description: MySQL database server
-# processname: mysqld
+
 
 port=${2:-3306}
 conf=<INSTALL_DIR>/srv/mysql/$port/my.cnf

@@ -1,10 +1,4 @@
 #!/bin/bash
-#
-# Startup script for redis server
-#
-# chkconfig: 345 85 15
-# description: Redis is a persistent key-value database
-# processname: redis
 
 port=${2:-6379}
 redisserver="<INSTALL_DIR>/opt/redis/bin/redis-server"

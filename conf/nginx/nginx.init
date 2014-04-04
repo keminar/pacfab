@@ -1,10 +1,4 @@
 #!/bin/bash
-#
-# Startup script for nginx
-#
-# chkconfig: 345 85 15
-# description: Nginx server
-# processname: nginx
 
 nginx=<INSTALL_DIR>/opt/nginx/sbin/nginx
 pidfile=<INSTALL_DIR>/opt/nginx/logs/nginx.pid

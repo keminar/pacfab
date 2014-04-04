@@ -1,10 +1,4 @@
 #!/bin/bash
-#
-# Startup script for apache
-#
-# chkconfig: 345 85 15
-# description: Apache server
-# processname: apache
 
 apache=<INSTALL_DIR>/opt/apache/bin/apachectl
 pidfile=<INSTALL_DIR>/opt/apache/logs/httpd.pid

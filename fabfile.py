@@ -3,13 +3,13 @@
 import os
 import sys
 import conf
+import core.utils as cu
 from fabric.api import *
-from core.utils import *
 
 @parallel
 def install(name = ""):
 	if (name != ""):
-		initClass = utils().initClass(name)
+		initClass = cu.utils().initClass(name)
 
 		# check
 		func = getattr(initClass, 'check')
@@ -34,7 +34,7 @@ def install(name = ""):
 @parallel
 def instance(name = "", port = ""):
 	if (name != "" and port !=""):
-		initClass = utils().initClass(name)
+		initClass = cu.utils().initClass(name)
 
 		# instance
 		func = getattr(initClass, 'instance')
@@ -45,16 +45,25 @@ def instance(name = "", port = ""):
 # 用户帮助提示参数
 def help():
 	paramMap = {
-		"int"    :"int system",
-		"anmp"   :"apache nginx mysql php",
-		"php"    :"php",
-		"apache" :"apache",
-		"mysql":"mysql",
-		"nginx":"nginx",
-		"git"  : "git",
-		"vim"  : "vim config",
+		"int"    : "Int system",
+		"git"    : "Git is a free and open source distributed version control system",
+		"screen" : "Screen is a full-screen window manager that multiplexes a physical terminal between several processes",
+		"vim"    : "Vim is a highly configurable text editor built to enable efficient text editing",
+		"anmp"   : "apache nginx mysql php",
+		"apache" : "The Apache HTTP Server Project is an effort to develop and maintain an open-source HTTP server",
+		"nginx"  : "nginx [engine x] is an HTTP and reverse proxy server",
+		"mysql"  : "The world's most popular open source database",
+		"php"    : "PHP is a popular general-purpose scripting language",
+		"apr"    : "Apache Portable Runtime (APR) project",
+		"cmake"  : "CMake is a family of tools designed to build, test and package software. ",
+		"iconv"  : "iconv is a computer program used to convert between different character encodings",
+		"mcrypt" : "mcrypt, and the accompanying libmcrypt, are intended to be replacements for the old Unix crypt",
+		"mhash"  : "Libmhash is a library that provides a uniform interface to several hash algorithms.",
+		"openssl": "The OpenSSL Project is a collaborative effort to develop a general purpose cryptography library.",
+		"pcre"   : "The PCRE library is a set of functions that implement regular expression pattern",
+		"redis"  : "Redis is an open source, BSD licensed, advanced key-value store.",
 	}
 	print("Please input soft name")
 	print("Softname:")
 	for soft in paramMap:
-		print("\t%-20s[%s]" % (soft, paramMap[soft]))
+		print("%-16s[%s]" % (soft, paramMap[soft]))
