@@ -15,8 +15,7 @@ class init(init):
 		run('yum install -y pam-devel libxml2-devel pcre-devel curl curl-devel libcurl-devel openldap-devel readline-devel')
 		if (self.bit == "64"):
 			run('cp -frp /usr/lib64/libldap* /usr/lib/')
-		if (self.epel() == "1"):
-			run('yum install -y --nogpgcheck libmcrypt-devel')
+		self.epel()
 		super(init, self).install()
 
 	def epel(self):

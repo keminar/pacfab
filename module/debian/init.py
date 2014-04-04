@@ -13,7 +13,7 @@ class init(init):
 				run('cat ' + conf.BASE_DIR + '/profile.tpl >> /etc/profile')
 		run('apt-get update -y')
 		run('apt-get install -y build-essential wget')
-		run('apt-get install -y libncurses5-dev libxml2-dev zlib1g-dev libbz2-dev libmcrypt-dev libreadline-dev')
+		run('apt-get install -y libncurses5-dev libxml2-dev zlib1g-dev libbz2-dev libreadline-dev')
 		run('apt-get install -y libjpeg-dev libpng-dev libxpm-dev libfreetype6-dev libxslt1-dev libsasl2-dev')
 		run('apt-get install -y curl libcurl3 libcurl4-gnutls-dev libldap2-dev libpcre3 libpcre3-dev')
 		if (utils().bit() == "64"):
