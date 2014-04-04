@@ -10,6 +10,7 @@ class base(object):
 	# 解压
 	def unzip(self, name, ext = '.tar.gz'):
 		with cd(conf.BASE_DIR + '/dist/src'):
+			run('rm -rf ' + name)
 			run('gunzip -q < ../' + name + ext + ' | tar xf -')
 
 	# 下载
@@ -29,15 +30,18 @@ class base(object):
 	def instance(self, port):
 		pass
 
-	# 开机启动
-	def chkconfig(self, name):
+	# 启动脚本
+	def service(self, name):
 		put(conf.BASE_DIR + '/conf/' + name + '/' + name + '.init', conf.INSTALL_DIR + '/bin/')
 		run('chmod +x ' + conf.INSTALL_DIR + '/bin/' + name + '.init')
 		run('sed -i "s/<INSTALL_DIR>/' + re.escape(conf.INSTALL_DIR) + '/g"  ' + conf.INSTALL_DIR + '/bin/' + name + '.init')
-		run('ln -sf ' + conf.INSTALL_DIR + '/bin/' + name + '.init /etc/init.d/' + name)
+
+	# 开机启动,待完善
+	def chkconfig(self, name):
 		with quiet(): # redhat
 			output = run('which chkconfig >/dev/null 2>&1;echo $?')
 		if (output == "0"):
+			run('ln -sf ' + conf.INSTALL_DIR + '/bin/' + name + '.init /etc/init.d/' + name)
 			run('chkconfig --del ' + name)
 			run('chkconfig --add ' + name)
 			run('chkconfig --level 345 ' + name + ' on')
@@ -45,6 +49,7 @@ class base(object):
 		with quiet(): # debian
 			output = run('which update-rc.d >/dev/null 2>&1;echo $?')
 		if (output == "0"):
+			run('ln -sf ' + conf.INSTALL_DIR + '/bin/' + name + '.init /etc/init.d/' + name)
 			run('update-rc.d -f ' + name + ' remove')
 			run('update-rc.d ' + name + ' start 85 3 4 5 . stop 15 0 6 .')
 

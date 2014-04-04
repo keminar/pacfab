@@ -29,7 +29,7 @@ class mysql(base):
 			''')
 			run('make && make install')
 		utils().adduser('mysql')
-		self.chkconfig('mysql')
+		self.service('mysql')
 		self.path('mysql')
 		self.instance()
 		run('touch ' + conf.INSTALL_DIR + '/opt/mysql/.install.log')

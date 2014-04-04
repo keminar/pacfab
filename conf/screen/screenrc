@@ -1,0 +1,14 @@
+# Turn off start message:
+startup_message off
+hardstatus alwayslastline "%{= dw} %`%-w%{=bu kw}%n %t%{-}%+w"
+
+# 闪屏
+vbell off 
+
+# 日志
+log off
+logfile /tmp/screenlog-%Y%m%d.log
+
+# more scrollbacks!
+defscrollback 10000
+

@@ -76,6 +76,9 @@ function source_system
 		"redhat" | "centos" | "fedora" )
 			source $SHELL_DIR/redhat.sh
 			;;
+		"arch")
+			source $SHELL_DIR/arch.sh
+			;;
 		"")
 			show_log "System not support! Exit." && exit 1
 	esac

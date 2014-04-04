@@ -33,7 +33,7 @@ class nginx(base):
 			cpu = run('cat /proc/cpuinfo | grep processor | wc -l')
 		run('sed -i "s/<worker_processes>/' + cpu + '/" ' + conf.INSTALL_DIR + '/opt/nginx/conf/nginx.conf')
 		utils().adduser('www')
-		self.chkconfig('nginx')
+		self.service('nginx')
 		self.path('nginx')
 		put(conf.BASE_DIR + '/conf/nginx/nginx_cut_log.sh', conf.INSTALL_DIR + '/bin/')
 		run('chmod a+x ' + conf.INSTALL_DIR + '/bin/nginx_cut_log.sh')

@@ -4,6 +4,8 @@ import conf
 from fabric.api import *
 from core.base import base
 class openssl(base):
+	# -fPIC no-gost
+	# http://www.apachelounge.com/viewtopic.php?t=4690
 	def install(self):
 		self.download(conf.OPENSSL_URL + '/source/' + conf.OPENSSL + '.tar.gz')
 		self.unzip(conf.OPENSSL)

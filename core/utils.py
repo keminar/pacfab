@@ -34,6 +34,8 @@ class utils():
 			return 'module.debian'
 		elif(os == 'redhat' or os == 'centos' or os == 'fedora'):
 			return 'module.redhat'
+		elif(os == 'arch'):
+			return 'module.arch'
 		else:
 			raise Exception("不支持的操作系统")
 

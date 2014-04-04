@@ -10,4 +10,4 @@ if [ ! -f $USER_SSH/authorized_keys ];then
 	cat $USER_SSH/id_rsa.pub >> $USER_SSH/authorized_keys
 fi
 
-./setup.sh -H localhost -i $USER_SSH/id_rsa.pub "$@"
+./setup.sh -H localhost -u root -i $USER_SSH/id_rsa.pub "$@"

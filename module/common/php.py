@@ -11,6 +11,7 @@ class php(base):
 		self.unzip(conf.PHP)
 		with cd(conf.BASE_DIR + '/dist/src/' + conf.PHP):
 			# fix php bug #54736
+			# https://bugs.php.net/bug.php?id=54736
 			if (self.bit == "64"):
 				run('sed -i "s/#ifdef OPENSSL_NO_SSL2/#ifndef OPENSSL_NO_SSL2/g"  ext/openssl/xp_ssl.c');
 			with_apache = ''
@@ -32,8 +33,8 @@ class php(base):
 				--with-gettext \
 				--with-iconv=''' + conf.INSTALL_DIR + '''/opt/libiconv \
 				--enable-mbstring \
-				--with-mhash \
-				--with-mcrypt \
+				--with-mhash='''  + conf.INSTALL_DIR + '''/opt/hash \
+				--with-mcrypt='''  + conf.INSTALL_DIR + '''/opt/mcrypt \
 				--with-gd \
 				--with-jpeg-dir \
 				--with-png-dir \
@@ -52,15 +53,24 @@ class php(base):
 				--with-zlib \
 				--enable-zip
 			''')
+			self.patch()
 			run("make && make install")
 			run('cp php.ini-production ' + conf.INSTALL_DIR + '/opt/php/etc/php.ini')
 		put(conf.BASE_DIR + '/conf/php/php-fpm.conf', conf.INSTALL_DIR + '/opt/php/etc/php-fpm.conf')
 		utils().adduser('www')
-		self.chkconfig('php')
+		self.service('php')
 		self.path('php')
 		run(conf.INSTALL_DIR + '/bin/php.init start')
 		self.apache()
 		run('touch ' + conf.INSTALL_DIR + '/opt/php/.install.log')
+
+	# ldap 部分机器编译解决方案
+	# http://blog.chinaunix.net/uid-20776139-id-3631380.html
+	def patch(self):
+		with quiet():
+			output = run('find /usr/lib/ -name "liblber-*"')
+		if (output != ""):
+			run("sed -i 's/^\(EXTRA_LIBS =.*\)$/\\1 -llber/' Makefile")
 
 	def apache(self):
 		if (self.test(conf.INSTALL_DIR + '/opt/apache') == 1):
