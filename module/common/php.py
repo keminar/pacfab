@@ -15,7 +15,7 @@ class php(base):
 			if (self.bit == "64"):
 				run('sed -i "s/#ifdef OPENSSL_NO_SSL2/#ifndef OPENSSL_NO_SSL2/g"  ext/openssl/xp_ssl.c');
 			with_apache = ''
-			if (self.test(conf.INSTALL_DIR + '/opt/apache') == 0):
+			if (self.test(conf.INSTALL_DIR + '/opt/apache') == '0'):
 				with_apache = '--with-apxs2=' + conf.INSTALL_DIR + '/opt/apache/bin/apxs'
 			run('''
 				./configure  --prefix=''' + conf.INSTALL_DIR + '''/opt/php \
@@ -73,7 +73,7 @@ class php(base):
 			run("sed -i 's/^\(EXTRA_LIBS =.*\)$/\\1 -llber/' Makefile")
 
 	def apache(self):
-		if (self.test(conf.INSTALL_DIR + '/opt/apache') == 1):
+		if (self.test(conf.INSTALL_DIR + '/opt/apache') == "1"):
 			return
 		with quiet():
 			line = run("grep -n  '#AddHandler cgi-script .cgi' " + conf.INSTALL_DIR + "/opt/apache/conf/httpd.conf |tail -n 1 | awk -F ':' '{print $1}'")
@@ -82,7 +82,7 @@ class php(base):
 
 	def require(self):
 		str = base.require(self)
-		return str + ',openssl,mysql,iconv'
+		return str + ',openssl,mysql,iconv,mcrypt'
 
 	def check(self):
 		return self.test(conf.INSTALL_DIR + '/opt/php/.install.log')

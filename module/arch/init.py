@@ -11,9 +11,14 @@ class init(init):
 			if (run('grep "/etc/profile.d" /etc/profile') == ""):
 				put(conf.BASE_DIR + '/conf/init/profile.tpl', conf.BASE_DIR)
 				run('cat ' + conf.BASE_DIR + '/profile.tpl >> /etc/profile')
-		run('pacman -S base-devel --noconfirm --need')
-		run('pacman -S wget --noconfirm --need')
-		#run('apt-get install -y libncurses5-dev libxml2-dev zlib1g-dev libbz2-dev libmcrypt-dev libreadline-dev')
-		#run('apt-get install -y libjpeg-dev libpng-dev libxpm-dev libfreetype6-dev libxslt1-dev libsasl2-dev')
-		#run('apt-get install -y curl libcurl3 libcurl4-gnutls-dev libldap2-dev libpcre3 libpcre3-dev')
+		run('pacman -S --noconfirm --need base-devel')
+		run('pacman -S --noconfirm --need wget')
+		run('pacman -S --noconfirm --need libjpeg-turbo libpng libxpm freetype2 libxslt libsasl')
+		run('pacman -S --noconfirm --need curl libldap pcre')
+		self.bit = utils().bit()
+		if (self.bit == "32"):
+			run('pacman -S --noconfirm --need lib32-ncurses lib32-libxml2 lib32-zlib lib32-bzip2 lib32-readline lib32-curl')
+		else:
+			run('pacman -S --noconfirm --need lib64-ncurses lib64-libxml2 lib64-zlib lib64-bzip2 lib64-readline lib64-curl')
+
 		super(init, self).install()

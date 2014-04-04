@@ -31,8 +31,8 @@ class mysql(base):
 		utils().adduser('mysql')
 		self.service('mysql')
 		self.path('mysql')
-		self.instance()
 		run('touch ' + conf.INSTALL_DIR + '/opt/mysql/.install.log')
+		self.instance()
 
 
 	def instance(self, port = '3306'):
