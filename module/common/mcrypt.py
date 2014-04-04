@@ -38,7 +38,8 @@ class mcrypt(base):
 			run('make && make install')
 
 	def require(self):
-		return 'iconv,mhash'
+		str = base.require(self)
+		return str + ',iconv,mhash'
 
 	def check(self):
 		return self.test(conf.INSTALL_DIR + '/opt/mcrypt/.install.log')
