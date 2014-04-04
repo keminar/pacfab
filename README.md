@@ -31,6 +31,7 @@ install
 		./setup.sh -H localhost -u root -p password instance:name=mysql,port=3307
 		说明name值为要配置实例的软件,port为新实例的端口
 支持的软件
+-------
 		mysql           [The world's most popular open source database]
 		redis           [Redis is an open source, BSD licensed, advanced key-value store.]
 
