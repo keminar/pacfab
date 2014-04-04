@@ -24,4 +24,4 @@ if [ ! -f $INSTALL_DIR/python/bin/fab ]; then
 	install_pip
 	install_fab
 fi
-$INSTALL_DIR/python/bin/fab "$@"
+$INSTALL_DIR/python/bin/fab --colorize-errors "$@"
