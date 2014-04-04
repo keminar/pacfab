@@ -9,8 +9,8 @@ class init(init):
 		super(init, self).prepare()
 		with quiet():
 			if (run('grep "/etc/profile.d" /etc/profile') == ""):
-				put(conf.BASE_DIR + '/conf/init/profile.tpl', conf.BASE_DIR)
-				run('cat ' + conf.BASE_DIR + '/profile.tpl >> /etc/profile')
+				put(conf.BASE_DIR + '/conf/init/profile.tpl', conf.BASE_DIR + '/dist/src')
+				run('cat ' + conf.BASE_DIR + '/dist/src/profile.tpl >> /etc/profile')
 		run('apt-get update -y')
 		run('apt-get install -y build-essential wget')
 		run('apt-get install -y libncurses5-dev libxml2-dev zlib1g-dev libbz2-dev libreadline-dev')

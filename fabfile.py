@@ -5,6 +5,7 @@ import sys
 import conf
 import core.utils as cu
 from fabric.api import *
+from fabric.colors import green
 
 @parallel
 def install(name = ""):
@@ -15,7 +16,11 @@ def install(name = ""):
 		func = getattr(initClass, 'check')
 		code = func()
 		if (code == "0"):
-			print("\"%s\" has been installed" % name)
+			if (name == "init"):
+				lock = '/var/log/.install.log'
+			else:
+				lock = conf.INSTALL_DIR + '/opt/' + name + '/.install.log'
+			print(green('[' + env.host + '] \"' + name + '\" has been installed, reinstall please remove ' + lock))
 			return
 		
 		# require
