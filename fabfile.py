@@ -63,7 +63,12 @@ def help():
 		"pcre"   : "The PCRE library is a set of functions that implement regular expression pattern",
 		"redis"  : "Redis is an open source, BSD licensed, advanced key-value store.",
 	}
-	print("Please input soft name")
-	print("Softname:")
+	print("Usage: ./local.sh [option] install:name=[name]")
+	print("Usage: ./local.sh [option] instance:name=[name],port=[port]")
+	print("install:")
 	for soft in paramMap:
-		print("%-16s[%s]" % (soft, paramMap[soft]))
+		print("\t%-16s[%s]" % (soft, paramMap[soft]))
+
+	print("instance:")
+	print("\t%-16s[%s]" % ('mysql', paramMap['mysql']))
+	print("\t%-16s[%s]" % ('redis', paramMap['redis']))
