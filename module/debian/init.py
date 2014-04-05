@@ -6,7 +6,6 @@ from core.utils import utils
 from module.common.init import init
 class init(init):
 	def install(self):
-		super(init, self).prepare()
 		with quiet():
 			if (run('grep "/etc/profile.d" /etc/profile') == ""):
 				put(conf.BASE_DIR + '/conf/init/profile.tpl', conf.BASE_DIR + '/dist/src')

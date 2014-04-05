@@ -15,6 +15,7 @@ class init(base):
 		self.rm_pod()
 
 	def install(self):
+		self.prepare()
 		run('touch /var/log/.install.log')
 
 	def require(self):
