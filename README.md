@@ -1,4 +1,4 @@
-pacfab
+Pacfab
 =======
 基于fabric实现的包编译工具
 一键安装多机ANMP等软件环境
