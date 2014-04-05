@@ -37,7 +37,7 @@ class utils():
 		elif(os == 'arch'):
 			return 'module.arch'
 		else:
-			raise Exception("不支持的操作系统")
+			return 'module.common'
 
 	# 实例化模块
 	def initClass(self, name):
