@@ -5,7 +5,7 @@ from fabric.api import *
 from core.base import base
 class apache(base):
 	def install(self):
-		self.download(conf.MIRROR + '/apache/' + conf.APACHE + '.tar.gz')
+		self.download(conf.APACHE_OLD + '/httpd/' + conf.APACHE + '.tar.gz')
 		self.unzip(conf.APACHE)
 		with cd(conf.BASE_DIR + '/dist/src/' + conf.APACHE):
 			run('''

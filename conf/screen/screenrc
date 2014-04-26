@@ -1,14 +1,51 @@
+# 执行profile
+shell -$SHELL
+
 # Turn off start message:
 startup_message off
 hardstatus alwayslastline "%{= dw} %`%-w%{=bu kw}%n %t%{-}%+w"
 
 # 闪屏
-vbell off 
+vbell off
 
 # 日志
-log off
+deflog off
 logfile /tmp/screenlog-%Y%m%d.log
 
 # more scrollbacks!
 defscrollback 10000
+
+# 初始化tab
+screen -t root 0
+screen -t user 1
+screen -t dev 2
+select 0
+
+# scroll bar support
+termcapinfo xterm|xterms|xs|rxvt ti@:te@
+
+# 快捷键
+# k1-k9  = F1-F9 | k; = F10 | F1-F2 = F11-F12
+bindkey -k k1 screen
+bindkey -k k2 title
+bindkey -k k3 kill
+bindkey -k k4 quit
+bindkey -k k5 detach
+bindkey -k k9 prev
+bindkey -k k; next
+
+# bind Alt`~= to screen0~12
+bindkey "^[`" select 0
+bindkey "^[1" select 1
+bindkey "^[2" select 2
+bindkey "^[3" select 3
+bindkey "^[4" select 4
+bindkey "^[5" select 5
+bindkey "^[6" select 6
+bindkey "^[7" select 7
+bindkey "^[8" select 8
+bindkey "^[9" select 9
+bindkey "^[0" select 10
+bindkey "^[-" select 11
+bindkey "^[=" select 12
 
