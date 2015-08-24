@@ -23,5 +23,6 @@ if [ ! -f $INSTALL_DIR/python/bin/fab ]; then
 	install_ez
 	install_pip
 	install_fab
+	cd $SCRIPT_DIR
 fi
 $INSTALL_DIR/python/bin/fab --colorize-errors "$@"

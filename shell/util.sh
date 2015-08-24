@@ -79,6 +79,9 @@ function source_system
 		"arch")
 			source $SHELL_DIR/arch.sh
 			;;
+		"gentoo")
+			source $SHELL_DIR/gentoo.sh
+			;;
 		"")
 			show_log "System not support! Exit." && exit 1
 	esac
