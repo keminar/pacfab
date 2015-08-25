@@ -5,7 +5,7 @@ import os
 BASE_DIR    = os.getcwd()
 INSTALL_DIR = '/data'
 
-MIRROR      = 'http://mirror.sohu.com'
+MIRROR      = 'http://mirrors.sohu.com'
 SF_URL      = 'http://jaist.dl.sourceforge.net/project'
 CMAKE_URL   = 'http://www.cmake.org/files/v2.8'
 APACHE_URL  = 'http://apache.fayea.com/apache-mirror'
@@ -22,7 +22,7 @@ FEDORA_URL  = 'http://dl.fedoraproject.org'
 REDIS_URL   = 'http://download.redis.io/releases'
 
 PHP         = 'php-5.4.25'
-MYSQL       = 'mysql-5.5.36'
+MYSQL       = 'mysql-5.5.45'
 CMAKE       = 'cmake-2.8.12.2'
 APACHE      = 'httpd-2.4.9'
 APR         = 'apr-1.5.0'
