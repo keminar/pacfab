@@ -16,13 +16,13 @@ def install(name = ""):
 		func = getattr(initClass, 'check')
 		code = func()
 		if (code == "0"):
-			if (name == "init"):
-				lock = '/var/log/.install.log'
-			else:
-				lock = conf.INSTALL_DIR + '/opt/' + name + '/.install.log'
+			func = getattr(initClass, 'lock')
+			lock = func()
+			if (lock == "0"):
+			    lock = conf.INSTALL_DIR + '/opt/' + name + '/.install.log'
 			print(green('[' + env.host + '] \"' + name + '\" has been installed, reinstall please remove ' + lock))
 			return
-		
+
 		# require
 		func = getattr(initClass, 'require')
 		require = func()

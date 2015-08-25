@@ -26,6 +26,10 @@ class base(object):
 	def check(self):
 		return "0"
 
+	# 获取lock
+	def lock(self):
+		return "0"
+
 	# 增加实例
 	def instance(self, port):
 		pass

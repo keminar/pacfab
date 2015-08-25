@@ -13,6 +13,8 @@ class vim(base):
 		with quiet():
 			output = run('test -e /root/.vimrc;echo $?')
 			return output
+	def lock(self):
+		return '/root/.vimrc'
 
 	def install(self):
 		with cd(conf.BASE_DIR + '/dist/src/'):

@@ -12,6 +12,8 @@ class screen(base):
 		with quiet():
 			output = run('test -e /root/.screenrc;echo $?')
 			return output
+	def lock(self):
+		return '/root/.screenrc'
 
 	def install(self):
 		put(conf.BASE_DIR + '/conf/screen/screenrc', '/root/.screenrc')

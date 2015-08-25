@@ -36,6 +36,8 @@ class utils():
 			return 'module.redhat'
 		elif(os == 'arch'):
 			return 'module.arch'
+		elif(os == 'gentoo'):
+			return 'module.gentoo'
 		else:
 			return 'module.common'
 

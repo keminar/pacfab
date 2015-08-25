@@ -9,3 +9,7 @@ class git(base):
 		with quiet():
 			output = run('which git >/dev/null 2>&1;echo $?')
 			return output
+	def lock(self):
+		with quiet():
+			output = run('which git')
+			return output

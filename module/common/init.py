@@ -32,3 +32,5 @@ class init(base):
 			if (output != ""):
 				run('mv ' + output + ' ' + output + '.bak')
 
+	def lock(self):
+		return '/var/log/.install.log'
