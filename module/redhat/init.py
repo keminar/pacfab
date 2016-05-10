@@ -9,7 +9,7 @@ class init(init):
 	def install(self):
 		self.bit = utils().bit()
 		run('yum update -y')
-		run('yum install -y wget gcc gcc-c++ gcc-g77 flex bison autoconf make automake ncurses-devel')
+		run('yum install -y wget gcc gcc-c++ gcc-g77 flex bison autoconf make automake ncurses-devel patch')
 		run('yum install -y bzip2-devel zlib-devel libjpeg-devel libpng-devel libtiff-devel freetype-devel gettext-devel')
 		run('yum install -y pam-devel libxml2-devel pcre-devel curl curl-devel libcurl-devel openldap-devel readline-devel')
 		if (self.bit == "64"):
