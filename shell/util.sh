@@ -26,7 +26,7 @@ function install_ez
 		return
 	fi
 	cd $DIST_DIR
-	wget -c -q http://peak.telecommunity.com/dist/ez_setup.py  | tee -a $LOG_FILE
+	wget -c --no-check-certificate https://bootstrap.pypa.io/ez_setup.py  | tee -a $LOG_FILE
 	$INSTALL_DIR/python/bin/python ez_setup.py  | tee -a $LOG_FILE
 	show_log "Easy_install installed"
 }
@@ -50,7 +50,7 @@ function install_pip
 		return
 	fi
 	cd $DIST_DIR
-	wget -c --no-check-certificate https://raw.github.com/pypa/pip/master/contrib/get-pip.py  | tee -a $LOG_FILE
+	wget -c --no-check-certificate https://bootstrap.pypa.io/get-pip.py  | tee -a $LOG_FILE
 	$INSTALL_DIR/python/bin/python get-pip.py  | tee -a $LOG_FILE
 	show_log "Pip installed"
 }
