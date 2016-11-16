@@ -1,4 +1,4 @@
-Building Python with SSL support 
+Building Python with SSL support (http://stackoverflow.com/questions/5937337/building-python-with-ssl-support-in-non-standard-location)
 
 In top level Python2.7.11 source dir:
 
